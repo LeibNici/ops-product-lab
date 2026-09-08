@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>假设看板 · H1</title>
+    <link rel="icon" href="data:," />
+    <link rel="stylesheet" href="css/board.css" />
+  </head>
+  <body>
+    <div class="wrap">
+      <header class="topbar">
+        <div>
+          <p class="eyebrow">H1 · ops-product-lab</p>
+          <h1>假设看板</h1>
+          <p class="lede">
+            给在 X 上 Build in Public 的独立开发者和小团队 PM：把假设、帖文和 7
+            天信号放在同一页，结束「发了但不知道有没有验证」。无账号、无后端。
+          </p>
+        </div>
+        <div class="toolbar">
+          <button type="button" id="new-hypothesis">新建假设</button>
+          <button type="button" class="ghost" id="load-demo">载入示例</button>
+          <button type="button" class="ghost" id="export-json">导出 JSON</button>
+          <label class="file-btn">
+            导入 JSON
+            <input id="import-json" type="file" accept="application/json,.json" />
+          </label>
+        </div>
+      </header>
+
+      <p class="status" id="status"></p>
+
+      <div class="layout">
+        <aside class="panel">
+          <h2>假设列表</h2>
+          <div id="hypothesis-list"></div>
+        </aside>
+        <section class="panel" id="editor"></section>
+      </div>
+    </div>
+
+    <script src="js/conclusion.js"></script>
+    <script src="js/storage.js"></script>
+    <script src="js/app.js"></script>
+  </body>
+</html>
