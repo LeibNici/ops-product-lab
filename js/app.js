@@ -290,8 +290,25 @@
   function numField(label, id, value) {
     return field(
       label,
-      '<input type="number" min="0" step="1" id="' + id + '" value="' + escapeAttr(String(value || 0)) + '">'
+      '<input type="number" min="0" step="1" inputmode="numeric" id="' +
+        id +
+        '" value="' +
+        escapeAttr(String(value || 0)) +
+        '">'
     );
+  }
+
+  function bindNumberInput(node, applyValue) {
+    if (!node) return;
+    node.addEventListener("focus", function () {
+      node.select();
+    });
+    node.addEventListener("input", function () {
+      applyValue(Math.max(0, Number(node.value) || 0));
+    });
+    node.addEventListener("blur", function () {
+      node.value = String(Math.max(0, Number(node.value) || 0));
+    });
   }
 
   function bindEditor(item) {
@@ -306,11 +323,9 @@
     });
 
     ["likes", "bookmarks", "reposts", "replies", "intentDms", "waitlist"].forEach(function (key) {
-      var node = document.getElementById(key);
-      if (!node) return;
-      node.addEventListener("input", function () {
+      bindNumberInput(document.getElementById(key), function (value) {
         patchSelected(function (h) {
-          h.signals[key] = Number(node.value) || 0;
+          h.signals[key] = value;
         });
       });
     });
@@ -320,11 +335,9 @@
       ["target-intentDms", "intentDms"],
       ["target-waitlist", "waitlist"],
     ].forEach(function (pair) {
-      var node = document.getElementById(pair[0]);
-      if (!node) return;
-      node.addEventListener("input", function () {
+      bindNumberInput(document.getElementById(pair[0]), function (value) {
         patchSelected(function (h) {
-          h.targets[pair[1]] = Number(node.value) || 0;
+          h.targets[pair[1]] = value;
         });
       });
     });
